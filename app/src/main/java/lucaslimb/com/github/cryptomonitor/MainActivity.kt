@@ -9,6 +9,7 @@ import androidx.appcompat.widget.Toolbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import lucaslimb.com.github.cryptoMonitor.R
 import lucaslimb.com.github.cryptomonitor.service.MercadoBitcoinServiceFactory
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
