@@ -1,7 +1,9 @@
 package lucaslimb.com.github.cryptomonitor
 
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -17,13 +19,17 @@ import java.util.Date
 import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var coins: List<Pair<String, String>>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_main)
 
         val toolbarMain: Toolbar = findViewById(R.id.toolbar_main)
         configureToolbar(toolbarMain)
+
+        configureSpinner()
 
         val btnRefresh: Button = findViewById(R.id.btn_refresh)
         btnRefresh.setOnClickListener{
@@ -42,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val service = MercadoBitcoinServiceFactory().create()
-                val response = service.getTicker()
+                val response = service.getTicker(selectedCoin())
                 if(response.isSuccessful){
                     val tickerResponse = response.body()
                     val lblValue: TextView = findViewById(R.id.lbl_value)
@@ -72,5 +78,30 @@ class MainActivity : AppCompatActivity() {
                                 Toast.LENGTH_LONG).show()
             }
         }
+    }
+
+    private fun configureSpinner() {
+        coins = listOf(
+            "BTC" to getString(R.string.spinner_btc_text),
+            "XLM" to getString(R.string.spinner_xlm_text),
+            "ETH" to getString(R.string.spinner_eth_text),
+            "USDT" to getString(R.string.spinner_usdt_text),
+            "XRP" to getString(R.string.spinner_xrp_text),
+            "SOL" to getString(R.string.spinner_sol_text),
+            "DOGE" to getString(R.string.spinner_doge_text),
+            "TRX" to getString(R.string.spinner_trx_text),
+            "USDC" to getString(R.string.spinner_usdc_text)
+        )
+
+        val spinner = findViewById<Spinner>(R.id.spinner)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, coins.map { it.second })
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+    }
+
+    private fun selectedCoin(): String {
+            val spinner = findViewById<Spinner>(R.id.spinner)
+            val selectedIndex = spinner.selectedItemPosition
+            return coins[selectedIndex].first
     }
 }

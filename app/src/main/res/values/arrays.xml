@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinner_coins">
+
+        <item>@string/spinner_btc_text</item>
+        <item>@string/spinner_xlm_text</item>
+        <item>@string/spinner_eth_text</item>
+        <item>@string/spinner_usdt_text</item>
+        <item>@string/spinner_xrp_text</item>
+        <item>@string/spinner_sol_text</item>
+        <item>@string/spinner_doge_text</item>
+        <item>@string/spinner_trx_text</item>
+        <item>@string/spinner_usdc_text</item>
+
+    </string-array>
+</resources>

@@ -3,6 +3,15 @@
     <string name="app_title">Monitor de Crypto Moedas</string>
     <string name="label_rate">Cotação</string>
     <string name="label_value">R$ 0,00</string>
-    <string name="label_date">dd/mm/yyyy hh:mm:ss</string>
+    <string name="label_date">Data e horário</string>
     <string name="label_refresh">Atualizar</string>
+    <string name="spinner_btc_text">Bictoin</string>
+    <string name="spinner_xlm_text">Stellar</string>
+    <string name="spinner_eth_text">Ethereum\n</string>
+    <string name="spinner_usdt_text">Tether USDt</string>
+    <string name="spinner_xrp_text">XRP</string>
+    <string name="spinner_sol_text">Solana</string>
+    <string name="spinner_doge_text">Dogecoin</string>
+    <string name="spinner_trx_text">TRON</string>
+    <string name="spinner_usdc_text">USDC</string>
 </resources>

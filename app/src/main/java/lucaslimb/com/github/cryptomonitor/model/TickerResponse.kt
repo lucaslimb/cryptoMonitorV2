@@ -11,5 +11,6 @@ class Ticker(
     val last: String,
     val buy: String,
     val sell: String,
+    val open: String,
     val date: Long
 )
