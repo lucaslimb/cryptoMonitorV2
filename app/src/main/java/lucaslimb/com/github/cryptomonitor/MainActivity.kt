@@ -1,6 +1,7 @@
 package lucaslimb.com.github.cryptomonitor
 
 import android.os.Bundle
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
@@ -8,10 +9,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import lucaslimb.com.github.cryptoMonitor.R
+import lucaslimb.com.github.cryptomonitor.adapter.InfoAdapter
+import lucaslimb.com.github.cryptomonitor.model.InfoItem
 import lucaslimb.com.github.cryptomonitor.service.MercadoBitcoinServiceFactory
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -30,6 +35,10 @@ class MainActivity : AppCompatActivity() {
         configureToolbar(toolbarMain)
 
         configureSpinner()
+
+        val recycler = findViewById<RecyclerView>(R.id.recycler_info)
+        recycler.layoutManager = LinearLayoutManager(this@MainActivity)
+        recycler.adapter = InfoAdapter(mutableListOf())
 
         val btnRefresh: Button = findViewById(R.id.btn_refresh)
         btnRefresh.setOnClickListener{
@@ -50,6 +59,7 @@ class MainActivity : AppCompatActivity() {
                 val service = MercadoBitcoinServiceFactory().create()
                 val response = service.getTicker(selectedCoin())
                 if(response.isSuccessful){
+                    val coin = selectedCoin()
                     val tickerResponse = response.body()
                     val lblValue: TextView = findViewById(R.id.lbl_value)
                     val lblDate: TextView = findViewById(R.id.lbl_date)
@@ -58,17 +68,37 @@ class MainActivity : AppCompatActivity() {
                     val openValue = tickerResponse?.ticker?.open?.toDoubleOrNull()
 
                     if(lastValue != null && openValue != null) {
-                        val numberFormat = NumberFormat.getCurrencyInstance(Locale("pt", "BR"))
+                        val numberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
                         lblValue.text = numberFormat.format(lastValue)
 
                         val variation = ((lastValue - openValue) / openValue) * 100
-                        val percentageFormat = String.format(Locale("pt", "BR'"), "%.2f%%", variation)
+                        val percentageFormat =
+                            String.format(Locale.getDefault(), "%.2f%%", variation)
                         lblVariation.text = percentageFormat
-                        lblVariation.setTextColor(if(variation >= 0) getColor(R.color.green) else getColor(R.color.red))
+                        lblVariation.setTextColor(
+                            if (variation >= 0) getColor(R.color.green) else getColor(
+                                R.color.red
+                            )
+                        )
+
+                        val date = tickerResponse?.ticker?.date?.let { Date(it * 1000L) }
+                        val isEnglish = Locale.getDefault().language == "en"
+                        val sdf = if (isEnglish)
+                            SimpleDateFormat("MM/dd/yyyy hh:mm:ss a", Locale.getDefault())
+                        else
+                            SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
+                        lblDate.text = sdf.format(date)
+
+                        val simpleSdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+                        val simpleDate = simpleSdf.format(date)
+
+                        val newItem = InfoItem(coin, simpleDate, lastValue)
+                        val recycler = findViewById<RecyclerView>(R.id.recycler_info)
+                        val adapter = recycler.adapter as InfoAdapter
+                        adapter.addItemAtTop(newItem)
+
+                        recycler.visibility = View.VISIBLE
                     }
-                    val date = tickerResponse?.ticker?.date?.let{ Date( it * 1000L) }
-                    val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
-                    lblDate.text = sdf.format(date)
                 } else {
                     val errorMessage = when (response.code()) {
                         400 -> "Bad Request"
