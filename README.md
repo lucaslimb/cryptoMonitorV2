@@ -21,11 +21,11 @@ APP de monitoração de cryptos utilizando a API do MercadoBitcoin
  
 ## Como Testar
 
-Ative fontes desconhecidas no seu dispositivo:
+- Ative fontes desconhecidas no seu dispositivo:
 
 **Configurações > Apps e notificações > Avançado > Acesso especial a apps > Instalar apps desconhecidos > *Ative a permição no seu APP de preferência***
 
-Baixe o APK disponível em:
+- Baixe o APK disponível em:
 
 `releases/download/v1.0/crypto_monitor.apk`
 
