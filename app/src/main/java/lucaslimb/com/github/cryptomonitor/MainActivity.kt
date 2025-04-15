@@ -96,6 +96,7 @@ class MainActivity : AppCompatActivity() {
                         val recycler = findViewById<RecyclerView>(R.id.recycler_info)
                         val adapter = recycler.adapter as InfoAdapter
                         adapter.addItemAtTop(newItem)
+                        recycler.scrollToPosition(0)
 
                         recycler.visibility = View.VISIBLE
                     }
