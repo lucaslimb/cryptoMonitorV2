@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:paddingVertical="6dp"
         android:layout_marginBottom="6dp"
-        android:entries="@array/spinner_coins"/>
+        android:entries="@array/spinner_coins"
+        android:gravity="center"/>
 
 </LinearLayout>

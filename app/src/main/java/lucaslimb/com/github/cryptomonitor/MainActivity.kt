@@ -53,11 +53,18 @@ class MainActivity : AppCompatActivity() {
                     val tickerResponse = response.body()
                     val lblValue: TextView = findViewById(R.id.lbl_value)
                     val lblDate: TextView = findViewById(R.id.lbl_date)
+                    val lblVariation: TextView = findViewById(R.id.lbl_variation)
                     val lastValue = tickerResponse?.ticker?.last?.toDoubleOrNull()
+                    val openValue = tickerResponse?.ticker?.open?.toDoubleOrNull()
 
-                    if(lastValue != null) {
+                    if(lastValue != null && openValue != null) {
                         val numberFormat = NumberFormat.getCurrencyInstance(Locale("pt", "BR"))
                         lblValue.text = numberFormat.format(lastValue)
+
+                        val variation = ((lastValue - openValue) / openValue) * 100
+                        val percentageFormat = String.format(Locale("pt", "BR'"), "%.2f%%", variation)
+                        lblVariation.text = percentageFormat
+                        lblVariation.setTextColor(if(variation >= 0) getColor(R.color.green) else getColor(R.color.red))
                     }
                     val date = tickerResponse?.ticker?.date?.let{ Date( it * 1000L) }
                     val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())

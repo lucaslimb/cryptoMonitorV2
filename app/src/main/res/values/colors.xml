@@ -9,4 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="primary">#0d6efd</color>
     <color name="success">#198754</color>
+    <color name="red">#FF0000</color>
+    <color name="green">#36FF00</color>
+    <color name="grey">#8E8E8C</color>
 </resources>
