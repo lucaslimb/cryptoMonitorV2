@@ -1,4 +1,4 @@
-package lucaslimb.com.github.android_crypto_monitor
+package lucaslimb.com.github.cryptomonitor
 
 import android.os.Bundle
 import android.widget.Button
@@ -9,7 +9,7 @@ import androidx.appcompat.widget.Toolbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import lucaslimb.com.github.android_crypto_monitor.service.MercadoBitcoinServiceFactory
+import lucaslimb.com.github.cryptomonitor.service.MercadoBitcoinServiceFactory
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Date

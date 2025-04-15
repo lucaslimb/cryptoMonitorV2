@@ -1,4 +1,4 @@
-package lucaslimb.com.github.android_crypto_monitor
+package lucaslimb.com.github.cryptomonitor
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

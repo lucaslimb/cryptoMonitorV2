@@ -1,4 +1,4 @@
-package lucaslimb.com.github.android_crypto_monitor.ui.theme
+package lucaslimb.com.github.cryptomonitor.ui.theme
 
 import android.app.Activity
 import android.os.Build

@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "lucaslimb.com.github.android_crypto_monitor"
+    namespace = "lucaslimb.com.github.cryptoMonitor"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "lucaslimb.com.github.android_crypto_monitor"
+        applicationId = "lucaslimb.com.github.cryptoMonitor"
         minSdk = 27
         targetSdk = 34
         versionCode = 1

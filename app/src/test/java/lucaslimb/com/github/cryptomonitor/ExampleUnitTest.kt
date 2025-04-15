@@ -1,4 +1,4 @@
-package lucaslimb.com.github.android_crypto_monitor
+package lucaslimb.com.github.cryptomonitor
 
 import org.junit.Test
 

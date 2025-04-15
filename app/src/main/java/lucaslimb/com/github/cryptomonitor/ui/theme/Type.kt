@@ -1,4 +1,4 @@
-package lucaslimb.com.github.android_crypto_monitor.ui.theme
+package lucaslimb.com.github.cryptomonitor.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

@@ -1,4 +1,4 @@
-package lucaslimb.com.github.android_crypto_monitor.service
+package lucaslimb.com.github.cryptomonitor.service
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

@@ -1,4 +1,4 @@
-package lucaslimb.com.github.android_crypto_monitor.model
+package lucaslimb.com.github.cryptomonitor.model
 
 class TickerResponse(
     val ticker: Ticker
