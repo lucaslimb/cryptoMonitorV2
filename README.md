@@ -8,6 +8,7 @@ APP nativo Android de monitoração de cryptos utilizando APIs
 <img src="assets/Screenshot0.png" alt="Screenshot do APP" width="200"> <img src="assets/Screenshot1.png" alt="Screenshot do APP" width="200">
 
 ## Como Testar
+_A versão do Android deve ser no mínimo 8.1_
 
 - Ative fontes desconhecidas no seu dispositivo:
 
