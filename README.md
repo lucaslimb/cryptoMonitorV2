@@ -1,7 +1,7 @@
 
 # 🪙 Android Crypto Monitor
 
-APP de monitoração de cryptos utilizando APIs 
+APP nativo Android de monitoração de cryptos utilizando APIs 
 
 ## Screenshots
 
