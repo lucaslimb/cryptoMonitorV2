@@ -14,7 +14,7 @@
     <string name="spinner_trx_text" translatable="false">TRON</string>
     <string name="spinner_usdc_text" translatable="false">USDC</string>
     <string name="label_variation">Variação</string>
-    <string name="coin">%1$s</string>
-    <string name="time">%1$s</string>
-    <string name="last_value">%1$d</string>
+    <string name="coin" translatable="false">%1$s</string>
+    <string name="time" translatable="false">%1$s</string>
+    <string name="last_value" translatable="false">%1$d</string>
 </resources>

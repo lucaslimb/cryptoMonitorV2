@@ -27,7 +27,7 @@ class InfoAdapter(private var items: MutableList<InfoItem>) :
         val item = items[position]
         holder.coin.text = item.coin
         holder.time.text = item.time
-        holder.value.text = item.value.toString()
+        holder.value.text = item.value
     }
 
     override fun getItemCount(): Int = items.size

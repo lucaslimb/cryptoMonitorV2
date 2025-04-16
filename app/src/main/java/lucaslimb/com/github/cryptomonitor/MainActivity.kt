@@ -17,7 +17,9 @@ import kotlinx.coroutines.launch
 import lucaslimb.com.github.cryptoMonitor.R
 import lucaslimb.com.github.cryptomonitor.adapter.InfoAdapter
 import lucaslimb.com.github.cryptomonitor.model.InfoItem
+import lucaslimb.com.github.cryptomonitor.service.EconomiaAwesomeAPIFactory
 import lucaslimb.com.github.cryptomonitor.service.MercadoBitcoinServiceFactory
+import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -50,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         toolbar.setTitleTextColor(getColor(R.color.white))
         supportActionBar?.setTitle(getText(R.string.app_title))
-        supportActionBar?.setBackgroundDrawable(getDrawable(R.color.success))
+        supportActionBar?.setBackgroundDrawable(getDrawable(R.color.teal_700))
     }
 
     private fun makeRestCall() {
@@ -64,13 +66,10 @@ class MainActivity : AppCompatActivity() {
                     val lblValue: TextView = findViewById(R.id.lbl_value)
                     val lblDate: TextView = findViewById(R.id.lbl_date)
                     val lblVariation: TextView = findViewById(R.id.lbl_variation)
-                    val lastValue = tickerResponse?.ticker?.last?.toDoubleOrNull()
+                    var lastValue = tickerResponse?.ticker?.last?.toDoubleOrNull()
                     val openValue = tickerResponse?.ticker?.open?.toDoubleOrNull()
 
                     if(lastValue != null && openValue != null) {
-                        val numberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
-                        lblValue.text = numberFormat.format(lastValue)
-
                         val variation = ((lastValue - openValue) / openValue) * 100
                         val percentageFormat =
                             String.format(Locale.getDefault(), "%.2f%%", variation)
@@ -80,6 +79,15 @@ class MainActivity : AppCompatActivity() {
                                 R.color.red
                             )
                         )
+
+                        val numberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault()) as DecimalFormat
+                        numberFormat.maximumFractionDigits = 2
+                        numberFormat.minimumFractionDigits = 2
+                        if (Locale.getDefault().language == "en"){
+                            val bid = makeAwesomeAPICall()
+                            if (bid != null) lastValue /= bid
+                        }
+                        lblValue.text = numberFormat.format(lastValue)
 
                         val date = tickerResponse?.ticker?.date?.let { Date(it * 1000L) }
                         val isEnglish = Locale.getDefault().language == "en"
@@ -92,7 +100,7 @@ class MainActivity : AppCompatActivity() {
                         val simpleSdf = SimpleDateFormat("HH:mm", Locale.getDefault())
                         val simpleDate = simpleSdf.format(date)
 
-                        val newItem = InfoItem(coin, simpleDate, lastValue)
+                        val newItem = InfoItem(coin, simpleDate, numberFormat.format(lastValue))
                         val recycler = findViewById<RecyclerView>(R.id.recycler_info)
                         val adapter = recycler.adapter as InfoAdapter
                         adapter.addItemAtTop(newItem)
@@ -138,8 +146,31 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun selectedCoin(): String {
-            val spinner = findViewById<Spinner>(R.id.spinner)
-            val selectedIndex = spinner.selectedItemPosition
-            return coins[selectedIndex].first
+        val spinner = findViewById<Spinner>(R.id.spinner)
+        val selectedIndex = spinner.selectedItemPosition
+        return coins[selectedIndex].first
+    }
+
+    private suspend fun makeAwesomeAPICall(): Double? {
+        return try {
+            val service = EconomiaAwesomeAPIFactory().create()
+            val response = service.getUSDBRL()
+            if (response.isSuccessful) {
+                response.body()?.USDBRL?.bid?.toDoubleOrNull()
+            } else {
+                val errorMessage = when (response.code()) {
+                    400 -> "Bad Request"
+                    401 -> "Unauthorized"
+                    403 -> "Forbidden"
+                    404 -> "Not Found"
+                    else -> "Unknown error"
+                }
+                Toast.makeText(this@MainActivity, errorMessage, Toast.LENGTH_LONG).show()
+                null
+            }
+        } catch (e: Exception) {
+            Toast.makeText(this@MainActivity, "Falha na chamada: ${e.message}", Toast.LENGTH_LONG).show()
+            null
+        }
     }
 }
