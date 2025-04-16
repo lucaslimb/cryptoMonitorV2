@@ -15,7 +15,7 @@ APP nativo Android de monitoração de cryptos utilizando APIs
 
 - Baixe o APK disponível em:
 
-`releases/download/v1.0/crypto_monitor.apk`
+`apks/crypto_monitor.apk`
 
 ## Stack Utilizada
 
