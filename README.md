@@ -14,9 +14,7 @@ _A versão do Android deve ser no mínimo 8.1_
 
 `Configurações > Segurança e privacidade > Instalar apps desconhecidos > Ative a permição no seu APP de preferência`
 
-- Baixe o APK disponível em:
-
-`apks/crypto_monitor.apk`
+- Baixe o APK disponível em: `apks/crypto_monitor.apk` ou em _releases_ (v1.0.0)
 
 ## Stack Utilizada
 
